@@ -3,37 +3,66 @@ import jwt from "jsonwebtoken";
 import Alumni from "../models/Alumni.js";
 import Student from "../models/Student.js";
 import Admin from "../models/Admin.js";
-/* REGISTER USER */
-export const register = async (req, res) => {
+/* REGISTER ALUMNI */
+export const register1 = async (req, res) => {
   try {
     const {
       firstName,
       lastName,
       email,
       password,
-      picturePath,
-      friends,
+      picturePath, 
+      companyName,
       location,
       occupation,
+      passoutYear,
     } = req.body;
 
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);
 
-    const newUser = new User({
+    const newAlumni = new Alumni({
       firstName,
       lastName,
       email,
       password: passwordHash,
       picturePath,
-      friends,
+      companyName,
       location,
       occupation,
-      viewedProfile: Math.floor(Math.random() * 10000),
-      impressions: Math.floor(Math.random() * 10000),
+      passoutYear,
     });
-    const savedUser = await newUser.save();
-    res.status(201).json(savedUser);
+    const savedAlumni = await newAlumni.save();
+    res.status(201).json(savedAlumni);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+/* REGISTER STUDENT*/
+export const register2 = async (req, res) => {
+  try {
+    const {
+      firstName,
+      lastName,
+      email,
+      password,
+      picturePath, 
+      passoutYear,
+    } = req.body;
+
+    const salt1 = await bcrypt.genSalt();
+    const passwordHash = await bcrypt.hash(password, salt1);
+
+    const newStudent = new Student({
+      firstName,
+      lastName,
+      email,
+      password: passwordHash,
+      picturePath,
+      passoutYear,
+    });
+    const savedStudent = await newStudent.save();
+    res.status(201).json(savedStudent);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -43,15 +72,31 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email: email });
-    if (!user) return res.status(400).json({ msg: "User does not exist. " });
+    const alumni = await Alumni.findOne({ email: email });
+    if (!alumni) return res.status(400).json({ msg: "Alumni does not exist. " });
 
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, alumni.password);
+    if (!isMatch) return res.status(400).json({ msg: "Invalid credentials. " });
+
+    const token = jwt.sign({ id: alumni._id }, process.env.JWT_SECRET);
+    delete alumni.password;
+    res.status(200).json({ token, alumni });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+export const login2 = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const student = await Student.findOne({ email: email });
+    if (!student) return res.status(400).json({ msg: "Student does not exist. " });
+
+    const isMatch = await bcrypt.compare(password, student.password);
     if (!isMatch) return res.status(400).json({ msg: "Invalid credentials. " });
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-    delete user.password;
-    res.status(200).json({ token, user });
+    delete student.password;
+    res.status(200).json({ token, student });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
