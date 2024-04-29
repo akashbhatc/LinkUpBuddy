@@ -50,14 +50,14 @@ export const register2 = async (req, res) => {
       passoutYear,
     } = req.body;
 
-    const salt1 = await bcrypt.genSalt();
-    const passwordHash = await bcrypt.hash(password, salt1);
+    const salt2 = await bcrypt.genSalt();
+    const passwordHash2 = await bcrypt.hash(password, salt2);
 
     const newStudent = new Student({
       firstName,
       lastName,
       email,
-      password: passwordHash,
+      password: passwordHash2,
       picturePath,
       passoutYear,
     });
