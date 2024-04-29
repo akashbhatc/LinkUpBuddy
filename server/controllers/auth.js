@@ -91,10 +91,10 @@ export const login2 = async (req, res) => {
     const student = await Student.findOne({ email: email });
     if (!student) return res.status(400).json({ msg: "Student does not exist. " });
 
-    const isMatch = await bcrypt.compare(password, student.password);
-    if (!isMatch) return res.status(400).json({ msg: "Invalid credentials. " });
+    const isMatch2 = await bcrypt.compare(password, student.password);
+    if (!isMatch2) return res.status(400).json({ msg: "Invalid credentials. " });
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ id: student._id }, process.env.JWT_SECRET);
     delete student.password;
     res.status(200).json({ token, student });
   } catch (err) {
