@@ -50,14 +50,14 @@ export const register2 = async (req, res) => {
       passoutYear,
     } = req.body;
 
-    const salt1 = await bcrypt.genSalt();
-    const passwordHash = await bcrypt.hash(password, salt1);
+    const salt2 = await bcrypt.genSalt();
+    const passwordHash2 = await bcrypt.hash(password, salt2);
 
     const newStudent = new Student({
       firstName,
       lastName,
       email,
-      password: passwordHash,
+      password: passwordHash2,
       picturePath,
       passoutYear,
     });
@@ -69,6 +69,24 @@ export const register2 = async (req, res) => {
 };
 
 /* LOGGING IN */
+
+
+export const login3 = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const admin = await Admin.findOne({ email: email });
+    if (!admin) return res.status(400).json({ msg: "Admin does not exist. " });
+
+    const isMatch3 = await bcrypt.compare(password, admin.password);
+    if (!isMatch3) return res.status(400).json({ msg: "Invalid credentials. " });
+
+    const token3 = jwt.sign({ id: admin._id }, process.env.JWT_SECRET);
+    delete admin.password;
+    res.status(200).json({ token3, admin });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -91,12 +109,12 @@ export const login2 = async (req, res) => {
     const student = await Student.findOne({ email: email });
     if (!student) return res.status(400).json({ msg: "Student does not exist. " });
 
-    const isMatch = await bcrypt.compare(password, student.password);
-    if (!isMatch) return res.status(400).json({ msg: "Invalid credentials. " });
+    const isMatch2 = await bcrypt.compare(password, student.password);
+    if (!isMatch2) return res.status(400).json({ msg: "Invalid credentials. " });
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+    const token2 = jwt.sign({ id: student._id }, process.env.JWT_SECRET);
     delete student.password;
-    res.status(200).json({ token, student });
+    res.status(200).json({ token2, student });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

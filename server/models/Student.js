@@ -29,13 +29,22 @@ const StudentSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
-    pasoutYear: {
+    passoutYear: {
       type: Array,
+      required:true,
     },
     location: String,
-    occupation: String,
-    queriesPostedanswered: Number,
-    queriesPostedunanswered: Number,
+    
+    queriesPostedanswered: {
+        type: String,
+        unique: true, 
+        default: [],
+      },
+    queriesPostedunanswered:  {
+        type: String,
+        unique: true, 
+        default: [],
+      },
   },
   { timestamps: true }
 );
