@@ -29,7 +29,7 @@ const StudentSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
-    pasoutYear: {
+    passoutYear: {
       type: Array,
     },
     location: String,
