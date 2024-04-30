@@ -45,6 +45,10 @@ const StudentSchema = new mongoose.Schema(
         unique: true, 
         default: [],
       },
+      bookmarks: {
+        type: Array,
+        default: [],
+      },
   },
   { timestamps: true }
 );
