@@ -1,24 +1,27 @@
 import express from "express";
 import {
   getAdmin,
-  getStudent,
   getStudentQueries,
   addRemoveQueries,
   addRemoveStudent,
-  getAlumni,
-  getStudentAnswers,
+  getAlumniAnswers,
   addRemoveAnswers,
   addRemoveAlumni,
+  addRemoveCompany, 
 } from "../controllers/admin.js";
 import { verifyToken } from "../middleware/auth.js";
 
 const router = express.Routercd();
 
 /* READ */
-router.get("/:id", verifyToken, getAdmin);
-router.get("/:id/bookmarks", verifyToken, getStudentBookmarks);
-
+router.get("'admin/:id", verifyToken, getAdmin);
+router.get("/:id/queries", verifyToken, getStudentQueries);
+router.get("/:id/answers", verifyToken, getAlumniAnswers);
 /* UPDATE */
-router.patch("/:id/:bookmarkId", verifyToken, addRemoveBookmarks);
+router.patch("admin/:id/:studID", verifyToken, addRemoveStudent);
+router.patch("admin/:id/:alumID", verifyToken, addRemoveAlumni);
+router.patch("admin/:id/:compID", verifyToken, addRemoveCompany);
+router.patch("admin/:id/:queryID", verifyToken, addRemoveQueries);
+router.patch("admin/:id/:answerID", verifyToken, addRemoveAnswers);
 
 export default router;
