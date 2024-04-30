@@ -78,7 +78,9 @@ export const login3 = async (req, res) => {
     if (!admin) return res.status(400).json({ msg: "Admin does not exist. " });
 
     const isMatch3 = await bcrypt.compare(password, admin.password);
+
     if (!isMatch3) return res.status(400).json({ msg: "Invalid credentials. " });
+  
 
     const token3 = jwt.sign({ id: admin._id }, process.env.JWT_SECRET);
     delete admin.password;
