@@ -39,7 +39,7 @@ export const register1 = async (req, res) => {
   }
 };
 /* REGISTER STUDENT*/
-export const register2 = async (req, res) => {
+export const register = async (req, res) => {
   try {
     const {
       firstName,

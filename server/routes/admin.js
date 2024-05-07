@@ -11,8 +11,10 @@ import {
 } from "../controllers/admin.js";
 import { verifyToken } from "../middleware/auth.js";
 
-const router = express.Routercd();
-
+const router = express.Router();
+router.get("/check",(req,res)=>{
+  res.status(200).json({"status":"Okay !"})
+})
 /* READ */
 router.get("'admin/:id", verifyToken, getAdmin);
 router.get("/:id/queries", verifyToken, getStudentQueries);

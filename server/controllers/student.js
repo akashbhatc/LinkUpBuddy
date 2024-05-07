@@ -32,7 +32,7 @@ export const getStudentBookmarks = async (req, res) => {
 };
 
 /* UPDATE */
-export const addRemoveBookmark = async (req, res) => {
+export const addRemoveBookmarks = async (req, res) => {
   try {
     const { id,bookmarkId } = req.params;
     const student = await Student.findById(id);

@@ -1,7 +1,7 @@
 import Student from "../models/Student.js";
 import Company from "../models/Company.js";
 import Admin from "../models/Admin.js";
-import Student from "../models/Student.js";
+// import Student from "../models/Student.js";
 import Alumni from "../models/Alumni.js";
 
 /* READ */
