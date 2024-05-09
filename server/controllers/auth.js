@@ -44,11 +44,12 @@ export const register = async (req, res) => {
     const {
       firstName,
       lastName,
+      bookmarks,
       email,
       password,
-      picturePath, 
+      picturePath,
+      location, 
       passoutYear,
-      bookmarks,
     } = req.body;
 
     const salt2 = await bcrypt.genSalt();
@@ -57,11 +58,13 @@ export const register = async (req, res) => {
     const newStudent = new Student({
       firstName,
       lastName,
+      bookmarks,
       email,
       password: passwordHash2,
       picturePath,
+      location,
       passoutYear,
-      bookmarks,
+      
     });
     const savedStudent = await newStudent.save();
     res.status(201).json(savedStudent);
@@ -72,7 +75,7 @@ export const register = async (req, res) => {
 
 /* LOGGING IN */
 
-
+/*ADMIN LOGIN */
 export const login3 = async (req, res) => {
   try {
     const { email, password } = req.body;

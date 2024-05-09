@@ -17,12 +17,12 @@ import queriesRoutes from "./routes/queries.js";
 import { register } from "./controllers/auth.js";
 //import { createQueries } from "./controllers/queries.js";
 import { verifyToken } from "./middleware/auth.js";
-// import Admin from "./models/Admin.js";
-// import Student from "./models/Student.js";
-// import Company from "./models/Company.js";
-//import Alumni from "./models/Alumni.js";
-//import Queries from "./models/Queries.js";
-// import { admins, alumni, students, queries } from "./data/index.js";
+import Admin from "./models/Admin.js";
+import Student from "./models/Student.js";
+import Company from "./models/Company.js";
+import Alumni from "./models/Alumni.js";
+import Queries from "./models/Queries.js";
+import { admins, alumni, students, queries } from "./data/index.js";
 
 /* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);
