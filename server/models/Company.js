@@ -8,9 +8,7 @@ const CompanySchema = new mongoose.Schema(
       min: 2,
       max: 50,
     },
-    totalAlumniCount: {
-      type: Number,
-    },
+
     picturePath: {
       type: String,
       default: "",
@@ -18,6 +16,10 @@ const CompanySchema = new mongoose.Schema(
     location: String,
     queriesAnswered: {
         type: Number,
+      },
+      queriesId: {
+        type: Array,
+        default: [],
       },
     },
     { timestamps: true }

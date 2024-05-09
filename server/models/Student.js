@@ -14,6 +14,10 @@ const StudentSchema = new mongoose.Schema(
       min: 2,
       max: 50,
     },
+    bookmarks: {
+      type: Array,
+      default: [],
+    },
     email: {
       type: String,
       required: true,
@@ -29,25 +33,10 @@ const StudentSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
-    passoutYear: {
-      type: Array,
-      required:true,
-    },
     location: String,
-    
-    queriesPostedanswered: {
-        type: String,
-        unique: true, 
-        default: [],
-      },
-    queriesPostedunanswered:  {
-        type: String,
-        unique: true, 
-        default: [],
-      },
-      bookmarks: {
+    passoutYear: {
         type: Array,
-        default: [],
+        required:true,
       },
   },
   { timestamps: true }

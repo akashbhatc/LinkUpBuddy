@@ -36,11 +36,6 @@ const AlumniSchema = new mongoose.Schema(
         type: Array,
         required:true,
       },
-    queriesAnswered: {
-        type: String,
-        unique: true, 
-        default: [],
-      },
     },
     { timestamps: true }
 );
