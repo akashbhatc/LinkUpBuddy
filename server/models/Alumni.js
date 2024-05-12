@@ -1,44 +1,45 @@
 import mongoose from "mongoose";
 
-const AlumniSchema = new mongoose.Schema(
-  {
+const AlumniSchema = new mongoose.Schema({
     firstName: {
-      type: String,
-      required: true,
-      min: 2,
-      max: 50,
+        type: String,
+        required: true,
+        min: 2,
+        max: 50,
     },
     lastName: {
-      type: String,
-      required: true,
-      min: 2,
-      max: 50,
+        type: String,
+        required: true,
+        min: 2,
+        max: 50,
     },
     email: {
-      type: String,
-      required: true,
-      max: 50,
-      unique: true,
+        type: String,
+        required: true,
+        max: 50,
+        unique: true,
     },
     password: {
-      type: String,
-      required: true,
-      min: 7,
+        type: String,
+        required: true,
+        min: 7,
     },
     picturePath: {
-      type: String,
-      default: "",
+        type: String,
+        default: "",
     },
     companyName: String,
     location: String,
     occupation: String,
     passoutYear: {
-        type: Array,
-        required:true,
-      },
+        type: Number, // Change to Number as per your requirements
+        required: true,
     },
-    { timestamps: true }
-);
+    answers: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Answers',
+    }],
+}, { timestamps: true });
 
 const Alumni = mongoose.model("Alumni", AlumniSchema);
 export default Alumni;

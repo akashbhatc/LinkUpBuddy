@@ -1,121 +1,111 @@
+// Import required models
 import Student from "../models/Student.js";
 import Company from "../models/Company.js";
 
 /* READ */
 export const getStudent = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const student = await Student.findById(id);
-    res.status(200).json(student);
-  } catch (err) {
-    res.status(404).json({ message: err.message });
-  }
+    try {
+        const { id } = req.params;
+        const student = await Student.findById(id);
+        res.status(200).json(student);
+    } catch (err) {
+        res.status(404).json({ message: err.message });
+    }
 };
+
 export const getCompany = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const company = await Company.findById(id);
-    res.status(200).json(company);
-  } catch (err) {
-    res.status(404).json({ message: err.message });
-  }
+    try {
+        const { id } = req.params;
+        const company = await Company.findById(id);
+        res.status(200).json(company);
+    } catch (err) {
+        res.status(404).json({ message: err.message });
+    }
 };
+
 export const getStudentQueries = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const student = await Student.findById(id);
-
-    const answers = await Promise.all(
-      student.queries.map((id) => Queries.findById(id))
-    );
-    const formattedQueries = answers.map(
-      ({ _id, companyName, answers }) => {
-        return { _id, companyName, answers };
-      }
-    );
-    res.status(200).json(formattedQueries);
-  } catch (err) {
-    res.status(404).json({ message: err.message });
-  }
+    try {
+        const { id } = req.params;
+        const student = await Student.findById(id).populate('queries');
+        res.status(200).json(student.queries);
+    } catch (err) {
+        res.status(404).json({ message: err.message });
+    }
 };
-export const getStudentBookmarks = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const student = await Student.findById(id);
 
-    const bookmarks = await Promise.all(
-      student.bookmarks.map((id) => Company.findById(id))
-    );
-    const formattedBookmarks = bookmarks.map(
-      ({ _id, companyName, location, picturePath }) => {
-        return { _id, companyName, location, picturePath };
-      }
-    );
-    res.status(200).json(formattedBookmarks);
-  } catch (err) {
-    res.status(404).json({ message: err.message });
-  }
+export const getStudentBookmarks = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const student = await Student.findById(id).populate('bookmarks');
+        res.status(200).json(student.bookmarks);
+    } catch (err) {
+        res.status(404).json({ message: err.message });
+    }
 };
 
 /* UPDATE */
-export const addRemoveBookmarks = async (req, res) => {
+export const removeBookmarks = async (req, res) => {
   try {
-    const { id,bookmarkId } = req.params;
+    const { id, companyId } = req.params;
     const student = await Student.findById(id);
-    const bookmark = await Student.findById(bookmarkId);
-
-    if (student.bookmarks.includes(bookmarkId)) {
-      student.bookmarks = student.bookmarks.filter((id) => id !== bookmarkId);
-      bookmark.bookmarks = bookmark.bookmarks.filter((id) => id !== id);
-    } else {
-      student.bookmarks.push(bookmarkId);
-      bookmark.bookmarks.push(id);
-    }
-    await student.save();
-    await bookmark.save();
-
-    const bookmarks = await Promise.all(
-      student.bookmarks.map((id) => Company.findById(id))
-    );
-    const formattedBookmarks = bookmarks.map(
-      ({ _id, companyName, location, picturePath }) => {
-        return { _id, companyName, location, picturePath };
-      }
-    );
-
-    res.status(200).json(formattedBookmarks);
-  } catch (err) {
-    res.status(404).json({ message: err.message });
-  }
-};
-
-export const addRemoveStudent = async (req, res) => {
-  try {
-    const { studId } = req.params;
-    const { action } = req.body; // Assuming you receive an action (add/remove) in the request body
-    const student = await Student.findById(studId);
-
     if (!student) {
       return res.status(404).json({ message: "Student not found." });
     }
 
-    if (action === "add") {
-      // Add student
-      if (!student.students.includes(studId)) {
-        student.students.push(studId);
-      }
-    } else if (action === "remove") {
-      // Remove student
-      student.students = student.students.filter(id => id !== studId);
+    // Check if the company ID is already in bookmarks
+    const index = student.bookmarks.indexOf(companyId);
+    if (index !== -1) {
+      // Remove the company ID from bookmarks
+      student.bookmarks.splice(index, 1);
+      await student.save();
+      res.status(200).json({ message: "Bookmark removed successfully." });
     } else {
-      return res.status(400).json({ message: "Invalid action." });
+      // Add the company ID to bookmarks
+      student.bookmarks.push(companyId);
+      await student.save();
+      res.status(200).json({ message: "Bookmark added successfully." });
     }
-
-    await student.save();
-
-    // Respond with updated list of students
-    res.status(200).json(student.students);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(404).json({ message: err.message });
+  }
+};
+
+export const removeStudent = async (req, res) => {
+    try {
+        const { studId } = req.params;
+        const student = await Student.findById(studId);
+        if (!student) {
+            return res.status(404).json({ message: "Student not found." });
+        }
+
+        const { action } = req.body;
+        if (action === "remove") {
+            // Remove student
+            await student.remove();
+            return res.status(200).json({ message: "Student removed successfully." });
+        } else {
+            return res.status(400).json({ message: "Invalid action." });
+        }
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+export const removeStudentQueries = async (req, res) => {
+  try {
+      const { id, queryId } = req.params;
+      const student = await Student.findById(id);
+      if (!student) {
+          return res.status(404).json({ message: "Student not found." });
+      }
+
+      if (student.queries.includes(queryId)) {
+          student.queries = student.queries.filter((id) => id !== queryId);
+          await student.save();
+          res.status(200).json({ message: "Query removed successfully." });
+      } else {
+          res.status(404).json({ message: "Query not found." });
+      }
+  } catch (err) {
+      res.status(500).json({ message: err.message });
   }
 };

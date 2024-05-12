@@ -14,10 +14,12 @@ const StudentSchema = new mongoose.Schema(
       min: 2,
       max: 50,
     },
-    bookmarks: {
-      type: Array,
-      default: [],
-    },
+    bookmarks: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Company', // Reference to the Company model
+      }
+    ],
     email: {
       type: String,
       required: true,
@@ -35,9 +37,13 @@ const StudentSchema = new mongoose.Schema(
     },
     location: String,
     passoutYear: {
-        type: Array,
-        required:true,
-      },
+      type: Array,
+      required: true,
+    },
+    queries: {
+      type: Array,
+      default: [],
+    },
   },
   { timestamps: true }
 );

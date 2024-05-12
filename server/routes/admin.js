@@ -4,30 +4,52 @@ import {
   getStudent,
   getAlumni,
   getStudentQueries,
-  addRemoveQueries,
-  addRemoveStudent,
+  removeQueries,
+  removeStudent,
   getAlumniAnswers,
-  addRemoveAnswers,
-  addRemoveAlumni,
-  addRemoveCompany, 
+  removeAnswers,
+  removeAlumni,
+  removeCompany, 
 } from "../controllers/admin.js";
 import { verifyToken } from "../middleware/auth.js";
 
 const router = express.Router();
-router.get("/check",(req,res)=>{
-  res.status(200).json({"status":"Okay !"})
-})
+
+// Test endpoint
+router.get("/check", (req, res) => {
+  res.status(200).json({ "status": "Okay !" });
+});
+
 /* READ */
-router.get("'/:id", verifyToken, getAdmin);
-router.get("'/:id", verifyToken, getStudent);
-router.get("'/:id", verifyToken, getAlumni);
-router.get("/:id/queries", verifyToken, getStudentQueries);
-router.get("/:id/answers", verifyToken, getAlumniAnswers);
+// Get admin by ID
+router.get("/:id/admin", verifyToken, getAdmin);
+
+// Get student by ID
+router.get("/:id/student/:studId", verifyToken, getStudent);
+
+// Get alumni by ID
+router.get("/:id/alumni/:alumId", verifyToken, getAlumni);
+
+// Get queries of a specific student
+router.get("/:id/student/:studId/queries", verifyToken, getStudentQueries);
+
+// Get answers of a specific alumni
+router.get("/:id/alumni/:alumId/answers", verifyToken, getAlumniAnswers);
+
 /* UPDATE */
-router.patch("/:id/:studID", verifyToken, addRemoveStudent);
-router.patch("/:id/:alumID", verifyToken, addRemoveAlumni);
-router.patch("/:id/:compID", verifyToken, addRemoveCompany);
-router.patch("/:id/:queryID", verifyToken, addRemoveQueries);
-router.patch("/:id/:answerID", verifyToken, addRemoveAnswers);
+// Remove a student
+router.patch("/:id/student/:studId/remove", verifyToken, removeStudent);
+
+// Remove an alumni
+router.patch("/:id/alumni/:alumId/remove", verifyToken, removeAlumni);
+
+// Remove a company
+router.patch("/:id/company/:companyId/remove", verifyToken, removeCompany);
+
+// Remove a query
+router.patch("/:id/query/:queryId/remove", verifyToken, removeQueries);
+
+// Remove an answer
+router.patch("/:id/answer/:answerId/remove", verifyToken, removeAnswers);
 
 export default router;

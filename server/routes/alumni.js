@@ -3,21 +3,33 @@ import {
   getAlumni,
   getCompany,
   getAlumniAnswers,
-  addRemoveAlumniAnswers,
-  addRemoveAlumni, 
+  removeAlumniAnswers,
+  removeAlumni, 
 } from "../controllers/alumni.js";
 import { verifyToken } from "../middleware/auth.js";
 
 const router = express.Router();
-router.get("/check",(req,res)=>{
-  res.status(200).json({"status":"Okay !"})
-})
+
+// Test endpoint
+router.get("/check", (req, res) => {
+  res.status(200).json({ "status": "Okay !" });
+});
+
 /* READ */
-router.get("'/:id", verifyToken, getAlumni);
-router.get("'/:id/companies", verifyToken, getCompany);
+// Get alumni by ID
+router.get("/:id", verifyToken, getAlumni);
+
+// Get company by ID
+router.get("/:id/company/:companyId", verifyToken, getCompany);
+
+// Get alumni answers
 router.get("/:id/answers", verifyToken, getAlumniAnswers);
+
 /* UPDATE */
-router.patch("/:id/:alumID", verifyToken, addRemoveAlumni);
-router.patch("/:id/:answerID", verifyToken, addRemoveAlumniAnswers);
+// Remove alumni
+router.patch("/:id/remove", verifyToken, removeAlumni);
+
+// Remove alumni answers
+router.patch("/:id/:answerId/remove", verifyToken, removeAlumniAnswers);
 
 export default router;

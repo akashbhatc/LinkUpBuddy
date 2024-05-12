@@ -1,8 +1,19 @@
 import express from "express";
+import { getFeedQueries, getUserQueries } from "../controllers/company.js";
+import { verifyToken } from "../middleware/auth.js";
 
 const router = express.Router();
-router.get("/check",(req,res)=>{
-  res.status(200).json({"status":"Okay !"})
-})
 
-export default router
+// Test endpoint
+router.get("/check", (req, res) => {
+    res.status(200).json({ "status": "Okay" });
+});
+
+/* READ */
+// Endpoint to get feed queries for a company
+router.get("/:companyId/queries", verifyToken, getFeedQueries);
+
+// Endpoint to get user-specific queries for a company
+router.get("/:userId/:companyId/queries", verifyToken, getUserQueries);
+
+export default router;
