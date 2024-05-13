@@ -37,13 +37,13 @@ const StudentSchema = new mongoose.Schema(
     },
     location: String,
     passoutYear: {
-      type: Array,
+      type: Number,
       required: true,
     },
-    queries: {
-      type: Array,
-      default: [],
-    },
+    queries: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Queries',
+  }],
   },
   { timestamps: true }
 );

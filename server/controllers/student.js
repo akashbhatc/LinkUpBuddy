@@ -1,7 +1,6 @@
 // Import required models
 import Student from "../models/Student.js";
 import Company from "../models/Company.js";
-
 /* READ */
 export const getStudent = async (req, res) => {
     try {
@@ -72,24 +71,21 @@ export const removeBookmarks = async (req, res) => {
 
 export const removeStudent = async (req, res) => {
     try {
-        const { studId } = req.params;
-        const student = await Student.findById(studId);
+        const student = await Student.findById(req.params.id);
         if (!student) {
             return res.status(404).json({ message: "Student not found." });
         }
-
-        const { action } = req.body;
-        if (action === "remove") {
-            // Remove student
-            await student.remove();
-            return res.status(200).json({ message: "Student removed successfully." });
-        } else {
-            return res.status(400).json({ message: "Invalid action." });
-        }
+        
+        // Remove student
+        await Student.deleteOne({ _id: req.params.id });
+        return res.status(200).json({ message: "Student removed successfully." });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 };
+
+
+
 export const removeStudentQueries = async (req, res) => {
   try {
       const { id, queryId } = req.params;

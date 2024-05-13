@@ -8,7 +8,7 @@ import {
   removeBookmarks,
   removeStudentQueries,
 } from "../controllers/student.js";
-import { verifyToken } from "../middleware/auth.js";
+
 
 const router = express.Router();
 
@@ -18,25 +18,25 @@ router.get("/check", (req, res) => {
 
 /* READ */
 // Endpoint to get student details by ID
-router.get("/:id", verifyToken, getStudent);
+router.get("/:id", getStudent);
 
 // Endpoint to get company details by ID
-router.get("/:id/:companyId", verifyToken, getCompany);
+router.get("/:companyId", getCompany);
 
 // Endpoint to get student's queries
-router.get("/:id/queries", verifyToken, getStudentQueries);
+router.get("/:id/queries", getStudentQueries);
 
 // Endpoint to get student's bookmarks
-router.get("/:id/bookmarks", verifyToken, getStudentBookmarks);
+router.get("/:id/bookmarks", getStudentBookmarks);
 
 /* UPDATE */
 // Endpoint to add or remove a student
-router.patch("/:id/remove", verifyToken, removeStudent);
+router.delete("/:id/remove", removeStudent);
 
 // Endpoint to add or remove a bookmark for a student
-router.patch("/:id/:companyId/bookmarks", verifyToken, removeBookmarks);
+router.patch("/:id/:companyId/bookmarks", removeBookmarks);
 
 // Endpoint to add or remove queries for a student
-router.patch("/:id/:queryId/remove", verifyToken, removeStudentQueries);
+router.patch("/:id/:queryId/remove", removeStudentQueries);
 
 export default router;

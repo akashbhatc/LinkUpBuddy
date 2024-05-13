@@ -1,6 +1,5 @@
 // Import required models
 import Query from "../models/Queries.js";
-import Answers from "../models/Answers.js";
 
 /* CREATE */
 export const createQueries = async (req, res) => {

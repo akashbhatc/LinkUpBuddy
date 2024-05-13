@@ -37,20 +37,14 @@ export const getAlumniAnswers = async (req, res) => {
 /* UPDATE */
 export const removeAlumni = async (req, res) => {
     try {
-        const { alumId } = req.params;
-        const alumni = await Alumni.findById(alumId);
+        const alumni = await Alumni.findById(req.params.id);
         if (!alumni) {
             return res.status(404).json({ message: "Alumni not found." });
         }
-
-        const { action } = req.body;
-        if (action === "remove") {
-            // Remove alumni
-            await alumni.remove();
-            return res.status(200).json({ message: "Alumni removed successfully." });
-        } else {
-            return res.status(400).json({ message: "Invalid action." });
-        }
+        
+        // Remove student
+        await Alumni.deleteOne({ _id: req.params.id });
+        return res.status(200).json({ message: "Alumni removed successfully." });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -58,20 +52,14 @@ export const removeAlumni = async (req, res) => {
 
 export const removeAlumniAnswers = async (req, res) => {
     try {
-        const { answerId } = req.params;
-        const answer = await Answers.findById(answerId);
-        if (!answer) {
+        const answers = await Answers.findById(req.params.id);
+        if (!answers) {
             return res.status(404).json({ message: "Answer not found." });
         }
-
-        const { action } = req.body;
-        if (action === "remove") {
-            // Remove answer
-            await answer.remove();
-            return res.status(200).json({ message: "Answer removed successfully." });
-        } else {
-            return res.status(400).json({ message: "Invalid action." });
-        }
+        
+        // Remove student
+        await Answers.deleteOne({ _id: req.params.id });
+        return res.status(200).json({ message: "Answer removed successfully." });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }

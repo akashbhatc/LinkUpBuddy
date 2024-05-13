@@ -27,9 +27,9 @@ router.get("/:id/answers", verifyToken, getAlumniAnswers);
 
 /* UPDATE */
 // Remove alumni
-router.patch("/:id/remove", verifyToken, removeAlumni);
+router.delete("/:id/remove", verifyToken, removeAlumni);
 
 // Remove alumni answers
-router.patch("/:id/:answerId/remove", verifyToken, removeAlumniAnswers);
+router.delete("/:id/:answerId/remove", verifyToken, removeAlumniAnswers);
 
 export default router;

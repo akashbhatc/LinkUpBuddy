@@ -13,9 +13,7 @@ import alumniRoutes from "./routes/alumni.js";
 import studentRoutes from "./routes/student.js";
 import adminRoutes from "./routes/admin.js";
 import queriesRoutes from "./routes/queries.js";
-import { register } from "./controllers/auth.js";
-import { createQueries } from "./controllers/queries.js";
-import { verifyToken } from "./middleware/auth.js";
+import { registerAlumni, registerStudent } from "./controllers/auth.js";
 
 /* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);
@@ -43,8 +41,8 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 /* ROUTES WITH FILES */
-app.post("/auth/register", upload.single("picture"), register);
-app.post("/queries", verifyToken, bodyParser.text(), createQueries);
+app.post("/auth/registerAlumni", upload.single("picture"), registerAlumni);
+app.post("/auth/registerStudent", upload.single("picture"), registerStudent);
 
 /* ROUTES */
 app.use("/auth", authRoutes);

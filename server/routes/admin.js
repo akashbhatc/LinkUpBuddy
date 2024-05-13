@@ -38,18 +38,18 @@ router.get("/:id/alumni/:alumId/answers", verifyToken, getAlumniAnswers);
 
 /* UPDATE */
 // Remove a student
-router.patch("/:id/student/:studId/remove", verifyToken, removeStudent);
+router.delete("/:id/student/:studId/remove", verifyToken, removeStudent);
 
 // Remove an alumni
-router.patch("/:id/alumni/:alumId/remove", verifyToken, removeAlumni);
+router.delete("/:id/alumni/:alumId/remove", verifyToken, removeAlumni);
 
 // Remove a company
-router.patch("/:id/company/:companyId/remove", verifyToken, removeCompany);
+router.delete("/:id/company/:companyId/remove", verifyToken, removeCompany);
 
 // Remove a query
-router.patch("/:id/query/:queryId/remove", verifyToken, removeQueries);
+router.delete("/:id/query/:queryId/remove", verifyToken, removeQueries);
 
 // Remove an answer
-router.patch("/:id/answer/:answerId/remove", verifyToken, removeAnswers);
+router.delete("/:id/answer/:answerId/remove", verifyToken, removeAnswers);
 
 export default router;

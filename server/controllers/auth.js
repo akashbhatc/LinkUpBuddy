@@ -4,7 +4,7 @@ import Alumni from "../models/Alumni.js";
 import Student from "../models/Student.js";
 import Admin from "../models/Admin.js";
 /* REGISTER ALUMNI */
-export const register1 = async (req, res) => {
+export const registerAlumni = async (req, res) => {
   try {
     const {
       firstName,
@@ -20,7 +20,7 @@ export const register1 = async (req, res) => {
 
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);
-
+console.log(passwordHash)
     const newAlumni = new Alumni({
       firstName,
       lastName,
@@ -39,12 +39,11 @@ export const register1 = async (req, res) => {
   }
 };
 /* REGISTER STUDENT*/
-export const register = async (req, res) => {
+export const registerStudent = async (req, res) => {
   try {
     const {
       firstName,
       lastName,
-      bookmarks,
       email,
       password,
       picturePath,
@@ -58,13 +57,11 @@ export const register = async (req, res) => {
     const newStudent = new Student({
       firstName,
       lastName,
-      bookmarks,
       email,
       password: passwordHash2,
       picturePath,
       location,
       passoutYear,
-      
     });
     const savedStudent = await newStudent.save();
     res.status(201).json(savedStudent);
@@ -76,15 +73,14 @@ export const register = async (req, res) => {
 /* LOGGING IN */
 
 /*ADMIN LOGIN */
-export const login3 = async (req, res) => {
+export const loginAdmin = async (req, res) => {
   try {
     const { email, password } = req.body;
     const admin = await Admin.findOne({ email: email });
     if (!admin) return res.status(400).json({ msg: "Admin does not exist. " });
-
-    const isMatch3 = await bcrypt.compare(password, admin.password);
-
-    if (!isMatch3) return res.status(400).json({ msg: "Invalid credentials. " });
+       console.log(admin.password)
+   // const isMatch3 = await  bcrypt.compare(password,admin.password);
+    if (!password===admin.password) return res.status(400).json({ msg: "Invalid credentials. " });
   
 
     const token3 = jwt.sign({ id: admin._id }, process.env.JWT_SECRET);
@@ -94,7 +90,7 @@ export const login3 = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
-export const login = async (req, res) => {
+export const loginAlumni = async (req, res) => {
   try {
     const { email, password } = req.body;
     const alumni = await Alumni.findOne({ email: email });
@@ -110,7 +106,7 @@ export const login = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
-export const login2 = async (req, res) => {
+export const loginStudent = async (req, res) => {
   try {
     const { email, password } = req.body;
     const student = await Student.findOne({ email: email });
