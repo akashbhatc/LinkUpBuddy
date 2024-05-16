@@ -37,6 +37,6 @@ router.delete("/:id/remove", removeStudent);
 router.patch("/:id/:companyId/bookmarks", removeBookmarks);
 
 // Endpoint to add or remove queries for a student
-router.patch("/:id/:queryId/remove", removeStudentQueries);
+router.delete("/:id/:queryId/remove", removeStudentQueries);
 
 export default router;

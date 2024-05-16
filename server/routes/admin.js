@@ -25,7 +25,7 @@ router.get("/check", (req, res) => {
 router.get("/:id/admin", verifyToken, getAdmin);
 
 // Get student by ID
-router.get("/:id/student/:studId", verifyToken, getStudent);
+router.get("/:id/student/:studId", getStudent);
 
 // Get alumni by ID
 router.get("/:id/alumni/:alumId", verifyToken, getAlumni);

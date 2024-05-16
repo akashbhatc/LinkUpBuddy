@@ -11,13 +11,13 @@ router.get("/check", (req, res) => {
 
 /* CREATE */
 // Endpoint to create a new query
-router.post("/", verifyToken, createQueries);
+router.post("/", createQueries);
 
 /* READ */
 // Endpoint to get feed queries
-router.get("/feed", verifyToken, getFeedQueries);
+router.get("/feed", getFeedQueries);
 
 // Endpoint to get user-specific queries
-router.get("/user/:userId", verifyToken, getUserQueries);
+router.get("/user/:userId", getUserQueries);
 
 export default router;

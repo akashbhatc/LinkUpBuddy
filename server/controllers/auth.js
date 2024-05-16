@@ -57,11 +57,13 @@ export const registerStudent = async (req, res) => {
     const newStudent = new Student({
       firstName,
       lastName,
+
       email,
       password: passwordHash2,
       picturePath,
       location,
       passoutYear,
+      
     });
     const savedStudent = await newStudent.save();
     res.status(201).json(savedStudent);
@@ -116,6 +118,7 @@ export const loginStudent = async (req, res) => {
     if (!isMatch2) return res.status(400).json({ msg: "Invalid credentials. " });
 
     const token2 = jwt.sign({ id: student._id }, process.env.JWT_SECRET);
+    // res.json({verifyToken: token2 })
     delete student.password;
     res.status(200).json({ token2, student });
   } catch (err) {

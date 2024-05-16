@@ -13,7 +13,7 @@ router.post("/registerStudent", registerStudent);
 router.post("/registerAlumni", registerAlumni);
 // Login endpoint
 router.post("/loginStudent", loginStudent);
-router.post("/loginAlumni", verifyToken, loginAlumni);
+router.post("/loginAlumni", loginAlumni);
 router.post("/loginAdmin", loginAdmin);
 
 export default router;

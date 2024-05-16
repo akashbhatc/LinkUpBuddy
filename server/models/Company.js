@@ -12,9 +12,7 @@ const CompanySchema = new mongoose.Schema({
         default: "",
     },
     location: String,
-    queriesAnswered: {
-        type: Number,
-    },
+ 
     queries: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Queries',
