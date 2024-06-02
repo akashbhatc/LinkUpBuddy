@@ -29,6 +29,9 @@ router.get("/:id/answers", verifyToken, getAlumniAnswers);
 // Remove alumni
 router.delete("/:id/remove", verifyToken, removeAlumni);
 
+// Create alumni answer
+router.post("/:id/answers", verifyToken, createAlumniAnswer);
+
 // Remove alumni answers
 router.delete("/:id/:answerId/remove", verifyToken, removeAlumniAnswers);
 
