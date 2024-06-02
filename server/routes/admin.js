@@ -9,7 +9,8 @@ import {
   getAlumniAnswers,
   removeAnswers,
   removeAlumni,
-  removeCompany, 
+  addCompany,
+  removeCompany,
 } from "../controllers/admin.js";
 import { verifyToken } from "../middleware/auth.js";
 
@@ -37,6 +38,7 @@ router.get("/:id/student/:studId/queries", verifyToken, getStudentQueries);
 router.get("/:id/alumni/:alumId/answers", verifyToken, getAlumniAnswers);
 
 /* UPDATE */
+router.post("/addCompany", verifyToken, addCompany);
 // Remove a student
 router.delete("/:id/student/:studId/remove", verifyToken, removeStudent);
 

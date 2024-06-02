@@ -5,10 +5,11 @@ import {
   getStudentBookmarks,
   getStudentQueries,
   removeStudent,
-  removeBookmarks,
+  addRemoveBookmarks,
   removeStudentQueries,
+  addStudentQueries,
 } from "../controllers/student.js";
-
+import { verifyToken } from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -30,11 +31,13 @@ router.get("/:id/queries", getStudentQueries);
 router.get("/:id/bookmarks", getStudentBookmarks);
 
 /* UPDATE */
+// Endpoint to add a student's query
+router.post("/:studId/student/:companyId/addQuery", verifyToken, removeStudent);
 // Endpoint to add or remove a student
 router.delete("/:id/remove", removeStudent);
 
 // Endpoint to add or remove a bookmark for a student
-router.patch("/:id/:companyId/bookmarks", removeBookmarks);
+router.patch("/:id/:companyId/bookmarks", addRemoveBookmarks);
 
 // Endpoint to add or remove queries for a student
 router.delete("/:id/:queryId/remove", removeStudentQueries);

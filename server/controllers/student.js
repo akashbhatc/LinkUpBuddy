@@ -1,6 +1,7 @@
 // Import required models
 import Student from "../models/Student.js";
 import Company from "../models/Company.js";
+import Query from "../models/Queries.js";
 /* READ */
 export const getStudent = async (req, res) => {
     try {
@@ -43,7 +44,7 @@ export const getStudentBookmarks = async (req, res) => {
 };
 
 /* UPDATE */
-export const removeBookmarks = async (req, res) => {
+export const addRemoveBookmarks = async (req, res) => {
   try {
     const { id, companyId } = req.params;
     const student = await Student.findById(id);
@@ -105,3 +106,29 @@ export const removeStudentQueries = async (req, res) => {
       res.status(500).json({ message: err.message });
   }
 };
+export const addStudentQueries = async (req, res) => {
+    try {
+        const { studId, companyId } = req.params;
+        const { queryText } = req.body;
+        const student = await Student.findById(studId);
+        if (!student) {
+            return res.status(404).json({ message: "Student not found." });
+        }
+        const company = await Company.findById(companyId);
+        const newQuery = new Query({
+            companyId : companyId,
+            studentId : studId,
+            queryText : queryText,
+          });
+          const savedQuery = await newQuery.save();
+          const queryId =savedQuery._id 
+        
+        company.queries.push(queryId);
+        await student.save(); 
+        student.queries.push(queryId);
+        await student.save();
+        res.status(201).json({ message: "Query added successfully." }, savedQuery);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+      }
+  };

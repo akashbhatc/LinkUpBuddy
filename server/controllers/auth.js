@@ -11,9 +11,8 @@ export const registerAlumni = async (req, res) => {
       lastName,
       email,
       password,
-      picturePath, 
       companyName,
-      location,
+      picturePath,
       occupation,
       passoutYear,
     } = req.body;
@@ -26,9 +25,8 @@ console.log(passwordHash)
       lastName,
       email,
       password: passwordHash,
-      picturePath,
       companyName,
-      location,
+      picturePath,
       occupation,
       passoutYear,
     });
@@ -46,18 +44,15 @@ export const registerStudent = async (req, res) => {
       lastName,
       email,
       password,
-      picturePath,
       location, 
       passoutYear,
     } = req.body;
 
     const salt2 = await bcrypt.genSalt();
     const passwordHash2 = await bcrypt.hash(password, salt2);
-
     const newStudent = new Student({
       firstName,
       lastName,
-
       email,
       password: passwordHash2,
       picturePath,

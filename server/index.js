@@ -2,7 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
-import dotenv from "dotenv";
+//import dotenv from "dotenv";
 import multer from "multer";
 import helmet from "helmet";
 import morgan from "morgan";
@@ -14,7 +14,9 @@ import studentRoutes from "./routes/student.js";
 import adminRoutes from "./routes/admin.js";
 import queriesRoutes from "./routes/queries.js";
 import { registerAlumni, registerStudent } from "./controllers/auth.js";
-
+import dotenv from "dotenv";
+dotenv.config();
+console.log(process.env.MONGO_URL); 
 /* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const QuerySchema = new mongoose.Schema({
     companyId: String,
     studentId: String,
+    queryText: String,
     answers: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Answers',
