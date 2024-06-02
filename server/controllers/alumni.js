@@ -50,6 +50,37 @@ export const removeAlumni = async (req, res) => {
     }
 };
 
+export const createAlumniAnswer = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { answerText } = req.body;
+
+        // Check if the alumni exists
+        const alumni = await Alumni.findById(id);
+        if (!alumni) {
+            return res.status(404).json({ message: "Alumni not found." });
+        }
+
+        // Create a new answer
+        const newAnswer = new Answers({
+            alumni: id,
+            text: answerText
+        });
+
+        // Save the new answer
+        const savedAnswer = await newAnswer.save();
+
+        // Update alumni with the new answer
+        alumni.answers.push(savedAnswer._id);
+        await alumni.save();
+
+        res.status(201).json(savedAnswer);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
+
 export const removeAlumniAnswers = async (req, res) => {
     try {
         const answers = await Answers.findById(req.params.id);
