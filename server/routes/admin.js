@@ -29,16 +29,16 @@ router.get("/:id/admin", getAdmin);
 router.get("/:id/student/:studId", getStudent);
 
 // Get alumni by ID
-router.get("/:id/alumni/:alumId", verifyToken, getAlumni);
+router.get("/:id/alumni/:alumId", getAlumni);
 
 // Get queries of a specific student
-router.get("/:id/student/:studId/queries", verifyToken, getStudentQueries);
+router.get("/:id/student/:studId/queries",getStudentQueries);
 
 // Get answers of a specific alumni
-router.get("/:id/alumni/:alumId/answers", verifyToken, getAlumniAnswers);
+router.get("/:id/alumni/:alumId/answers", getAlumniAnswers);
 
 /* UPDATE */
-router.post("/addCompany", addCompany);
+router.post("/:id/addCompany", addCompany);
 // Remove a student
 router.delete("/:id/student/:studId/remove", removeStudent);
 

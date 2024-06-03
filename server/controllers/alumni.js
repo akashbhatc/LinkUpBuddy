@@ -23,7 +23,7 @@ export const getCompany = async (req, res) => {
         res.status(404).json({ message: err.message });
     }
 };
-
+//Working fine
 export const getAlumniAnswers = async (req, res) => {
     try {
         const { id } = req.params;
@@ -49,7 +49,7 @@ export const removeAlumni = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 };
-
+//Working fine
 export const removeAlumniAnswers = async (req, res) => {
     try {
         const { id, answerId } = req.params;
@@ -91,7 +91,7 @@ export const removeAlumniAnswers = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 };
-
+//Working fine
 export const addAlumniAnswers = async (req, res) => {
     try {
         const { id,queryId} = req.params;

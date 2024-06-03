@@ -7,6 +7,7 @@ import Answers from "../models/Answers.js";
 import Queries from "../models/Queries.js";
 
 /* READ */
+//Working fine
 export const getAdmin = async (req, res) => {
     try {
         const { id } = req.params;
@@ -16,21 +17,21 @@ export const getAdmin = async (req, res) => {
         res.status(404).json({ message: err.message });
     }
 };
-
+//Working fine
 export const getAlumni = async (req, res) => {
     try {
-        const { id } = req.params;
-        const alumni = await Alumni.findById(id);
+        const { alumId } = req.params;
+        const alumni = await Alumni.findById(alumId);
         res.status(200).json(alumni);
     } catch (err) {
         res.status(404).json({ message: err.message });
     }
 };
-
+// Working fine
 export const getStudent = async (req, res) => {
     try {
-        const { id } = req.params;
-        const student = await Student.findById(id);
+        const { studId } = req.params;
+        const student = await Student.findById(studId);
         res.status(200).json(student);
     } catch (err) {
         res.status(404).json({ message: err.message });
@@ -39,24 +40,25 @@ export const getStudent = async (req, res) => {
 
 export const getStudentQueries = async (req, res) => {
     try {
-        const { id } = req.params;
-        const student = await Student.findById(id).populate('queries');
-        res.status(200).json(student.queries);
+        const { studId } = req.params;
+        const student = await Student.findById(studId);
+        const studentqueries = student.populate('queries');
+        res.status(200).json(student.studentqueries);
     } catch (err) {
         res.status(404).json({ message: err.message });
     }
 };
-
+//Working fine
 export const getAlumniAnswers = async (req, res) => {
     try {
-        const { id } = req.params;
-        const alumni = await Alumni.findById(id).populate('answers');
+        const { alumId } = req.params;
+        const alumni = await Alumni.findById(alumId).populate('answers');
         res.status(200).json(alumni.answers);
     } catch (err) {
         res.status(404).json({ message: err.message });
     }
 };
-
+//Working fine
 /* UPDATE */
 export const removeStudent = async (req, res) => {
     try {
@@ -78,6 +80,8 @@ export const removeStudent = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 };
+
+//Working fine
 export const removeAlumni = async (req, res) => {
     try {
         const {id,alumId} = req.params
@@ -97,9 +101,13 @@ export const removeAlumni = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 };
+//Working fine
 export const addCompany = async (req, res) => {
     try {
+        const { id } = req.params;
+        
       const { companyName,location } = req.body;   //picturePath pending
+
       const  newCompany = new Company( { 
         companyName : companyName, 
         // picturePath : picturePath,
@@ -111,7 +119,7 @@ export const addCompany = async (req, res) => {
     res.status(500).json({ error: err.message });
   }    
   };
-  
+  //Working fine
 export const removeCompany = async (req, res) => {
     try {
         const admin = await Admin.findById(req.params.id)
@@ -178,22 +186,9 @@ export const removeAnswers = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 };
-
+//Working fine
 export const removeQueries = async (req, res) => {
-    // try {
-       
-    //     const queries = await Query.findById(req.params.id);
-    //     if (!queries) {
-    //         return res.status(404).json({ message: "Query not found." });
-    //     }
-        
-    //     // Remove student
-    //     await Query.deleteOne({ _id: req.params.id });
-        
-    //     return res.status(200).json({ message: "Query removed successfully." });
-    // } catch (err) {
-    //     res.status(500).json({ message: err.message });
-    // }
+
     try {
         const { id, queryId } = req.params;
         const admin = await Admin.findById(id);
@@ -204,7 +199,7 @@ export const removeQueries = async (req, res) => {
         // Find the answer by ID
         const query = await Queries.findById(queryId);
         if (!query) {
-            return res.status(404).json({ message: "Answer not found." });
+            return res.status(404).json({ message: "Query not found." });
         }
         const studentId = query.studentId
         // Find alumni by ID

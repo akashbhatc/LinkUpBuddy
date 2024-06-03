@@ -1,5 +1,5 @@
 import express from "express";
-import { createQueries, getFeedQueries, getUserQueries } from "../controllers/queries.js";
+import { createQueries, getFeedQueries, getStudentQueries } from "../controllers/queries.js";
 import { verifyToken } from "../middleware/auth.js";
 
 const router = express.Router();
@@ -18,6 +18,6 @@ router.post("/", createQueries);
 router.get("/feed", getFeedQueries);
 
 // Endpoint to get user-specific queries
-router.get("/user/:userId", getUserQueries);
+router.get("/user/:userId", getStudentQueries);
 
 export default router;

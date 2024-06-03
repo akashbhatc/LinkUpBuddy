@@ -21,7 +21,7 @@ router.get("/check", (req, res) => {
 router.get("/:id", verifyToken, getAlumni);
 
 // Get company by ID
-router.get("/:id/company/:companyId", verifyToken, getCompany);
+router.get("/:id/company/:companyId", getCompany);
 
 // Get alumni answers
 router.get("/:id/answers", getAlumniAnswers);
@@ -31,6 +31,6 @@ router.get("/:id/answers", getAlumniAnswers);
 router.delete("/:id/remove", removeAlumni);
 
 // Remove alumni answers
-router.delete("/:id/:answerId/remove", verifyToken, removeAlumniAnswers);
+router.delete("/:id/:answerId/remove",removeAlumniAnswers);
 router.post("/:id/:queryId/answer", addAlumniAnswers);
 export default router;

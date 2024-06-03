@@ -1,7 +1,7 @@
 // Import required models
 import Student from "../models/Student.js";
 import Company from "../models/Company.js";
-import Query from "../models/Queries.js";
+import Queries from "../models/Queries.js";
 /* READ */
 export const getStudent = async (req, res) => {
     try {
@@ -118,7 +118,7 @@ export const addStudentQueries = async (req, res) => {
         if (!company) {
             return res.status(404).json({ message: "Company not found." });
         }
-        const newQuery = new Query({
+        const newQuery = new Queries({
             companyId : companyId,
             studentId : studId,
             queryText : queryText,
