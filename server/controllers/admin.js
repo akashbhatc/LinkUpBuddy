@@ -37,7 +37,7 @@ export const getStudent = async (req, res) => {
         res.status(404).json({ message: err.message });
     }
 };
-
+// Working fine
 export const getStudentQueries = async (req, res) => {
     try {
         const { studId } = req.params;
@@ -137,7 +137,7 @@ export const removeCompany = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 };
-
+//Working fine
 export const removeAnswers = async (req, res) => {
     try {
         const { id, answerId } = req.params;

@@ -4,6 +4,7 @@ import Alumni from "../models/Alumni.js";
 import Answers from "../models/Answers.js";
 import Queries from "../models/Queries.js";
 /* READ */
+//Working fine
 export const getAlumni = async (req, res) => {
     try {
         const { id } = req.params;
@@ -13,11 +14,15 @@ export const getAlumni = async (req, res) => {
         res.status(404).json({ message: err.message });
     }
 };
-
+//
 export const getCompany = async (req, res) => {
     try {
-        const { id } = req.params;
-        const company = await Company.findById(id);
+        const { id,companyId } = req.params;
+        const alumni = await Alumni.findById(id);
+        const company = await Company.findById(companyId);
+        if(!alumni) {
+            return res.status(404).json({ message: "Alumni not found." });
+        }
         res.status(200).json(company);
     } catch (err) {
         res.status(404).json({ message: err.message });

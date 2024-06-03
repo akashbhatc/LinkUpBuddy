@@ -18,7 +18,7 @@ router.get("/check", (req, res) => {
 
 /* READ */
 // Get alumni by ID
-router.get("/:id", verifyToken, getAlumni);
+router.get("/:id", getAlumni);
 
 // Get company by ID
 router.get("/:id/company/:companyId", getCompany);
