@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
 const AnswerSchema = new mongoose.Schema({
-    companyId: String,
-    studentId: String,
+    queryId: String,
+    alumniId: String,
     answerText: String, // Add a field to store the answer text
 }, { timestamps: true });
 

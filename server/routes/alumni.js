@@ -4,6 +4,7 @@ import {
   getCompany,
   getAlumniAnswers,
   removeAlumniAnswers,
+  addAlumniAnswers,
   removeAlumni, 
 } from "../controllers/alumni.js";
 import { verifyToken } from "../middleware/auth.js";
@@ -23,13 +24,13 @@ router.get("/:id", verifyToken, getAlumni);
 router.get("/:id/company/:companyId", verifyToken, getCompany);
 
 // Get alumni answers
-router.get("/:id/answers", verifyToken, getAlumniAnswers);
+router.get("/:id/answers", getAlumniAnswers);
 
 /* UPDATE */
 // Remove alumni
-router.delete("/:id/remove", verifyToken, removeAlumni);
+router.delete("/:id/remove", removeAlumni);
 
 // Remove alumni answers
 router.delete("/:id/:answerId/remove", verifyToken, removeAlumniAnswers);
-
+router.post("/:id/:queryId/answer", addAlumniAnswers);
 export default router;

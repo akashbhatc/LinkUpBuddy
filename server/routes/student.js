@@ -32,11 +32,11 @@ router.get("/:id/bookmarks", getStudentBookmarks);
 
 /* UPDATE */
 // Endpoint to add a student's query
-router.post("/:studId/student/:companyId/addQuery", verifyToken, removeStudent);
+router.post("/:studId/student/:companyId/addQuery", addStudentQueries);
 // Endpoint to add or remove a student
 router.delete("/:id/remove", removeStudent);
 
-// Endpoint to add or remove a bookmark for a student
+// Endpoint to add or remove a bookmark for a students
 router.patch("/:id/:companyId/bookmarks", addRemoveBookmarks);
 
 // Endpoint to add or remove queries for a student

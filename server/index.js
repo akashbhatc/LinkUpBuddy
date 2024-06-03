@@ -15,7 +15,6 @@ import adminRoutes from "./routes/admin.js";
 import queriesRoutes from "./routes/queries.js";
 import { registerAlumni, registerStudent } from "./controllers/auth.js";
 import dotenv from "dotenv";
-dotenv.config();
 console.log(process.env.MONGO_URL); 
 /* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);

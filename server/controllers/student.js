@@ -115,6 +115,9 @@ export const addStudentQueries = async (req, res) => {
             return res.status(404).json({ message: "Student not found." });
         }
         const company = await Company.findById(companyId);
+        if (!company) {
+            return res.status(404).json({ message: "Company not found." });
+        }
         const newQuery = new Query({
             companyId : companyId,
             studentId : studId,
@@ -127,7 +130,7 @@ export const addStudentQueries = async (req, res) => {
         await student.save(); 
         student.queries.push(queryId);
         await student.save();
-        res.status(201).json({ message: "Query added successfully." }, savedQuery);
+        res.status(201).json(savedQuery);
     } catch (err) {
         res.status(500).json({ error: err.message });
       }

@@ -30,8 +30,7 @@ console.log(passwordHash)
       occupation,
       passoutYear,
     });
-    const savedAlumni = await newAlumni.save();
-    res.status(201).json(savedAlumni);
+    const savedAlumni = await newAlumni.save().status(201).json(savedAlumni);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

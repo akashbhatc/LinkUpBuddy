@@ -23,7 +23,7 @@ router.get("/check", (req, res) => {
 
 /* READ */
 // Get admin by ID
-router.get("/:id/admin", verifyToken, getAdmin);
+router.get("/:id/admin", getAdmin);
 
 // Get student by ID
 router.get("/:id/student/:studId", getStudent);
@@ -38,20 +38,20 @@ router.get("/:id/student/:studId/queries", verifyToken, getStudentQueries);
 router.get("/:id/alumni/:alumId/answers", verifyToken, getAlumniAnswers);
 
 /* UPDATE */
-router.post("/addCompany", verifyToken, addCompany);
+router.post("/addCompany", addCompany);
 // Remove a student
-router.delete("/:id/student/:studId/remove", verifyToken, removeStudent);
+router.delete("/:id/student/:studId/remove", removeStudent);
 
 // Remove an alumni
-router.delete("/:id/alumni/:alumId/remove", verifyToken, removeAlumni);
+router.delete("/:id/alumni/:alumId/remove", removeAlumni);
 
 // Remove a company
-router.delete("/:id/company/:companyId/remove", verifyToken, removeCompany);
+router.delete("/:id/company/:companyId/remove", removeCompany);
 
 // Remove a query
-router.delete("/:id/query/:queryId/remove", verifyToken, removeQueries);
+router.delete("/:id/query/:queryId/remove", removeQueries);
 
 // Remove an answer
-router.delete("/:id/answer/:answerId/remove", verifyToken, removeAnswers);
+router.delete("/:id/answer/:answerId/remove", removeAnswers);
 
 export default router;

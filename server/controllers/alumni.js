@@ -2,7 +2,7 @@
 import Company from "../models/Company.js";
 import Alumni from "../models/Alumni.js";
 import Answers from "../models/Answers.js";
-
+import Queries from "../models/Queries.js";
 /* READ */
 export const getAlumni = async (req, res) => {
     try {
@@ -52,15 +52,71 @@ export const removeAlumni = async (req, res) => {
 
 export const removeAlumniAnswers = async (req, res) => {
     try {
-        const answers = await Answers.findById(req.params.id);
-        if (!answers) {
+        const { id, answerId } = req.params;
+        
+        // Find alumni by ID
+        const alumni = await Alumni.findById(id);
+        if (!alumni) {
+            return res.status(404).json({ message: "Alumni not found." });
+        }
+
+        // Find the answer by ID
+        const answer = await Answers.findById(answerId);
+        if (!answer) {
             return res.status(404).json({ message: "Answer not found." });
         }
-        
-        // Remove student
-        await Answers.deleteOne({ _id: req.params.id });
+        const queryId = answer.queryId
+        const query = await Queries.findById(queryId);
+        if (!answer) {
+            return res.status(404).json({ message: "Answer not found." });
+        } 
+        // Remove answer from Alumni document
+        const index = alumni.answers.indexOf(answerId);
+        if (index !== -1) {
+            alumni.answers.splice(index, 1);
+        }
+        const index2 = query.answers.indexOf(answerId);
+        if (index2 !== -1) {
+            query.answers.splice(index2, 1);
+        }
+
+        // Remove answer from Answers collection
+        await Answers.deleteOne({ _id: answerId });
+
+        // Save changes
+        await alumni.save();
+        await query.save();
         return res.status(200).json({ message: "Answer removed successfully." });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 };
+
+export const addAlumniAnswers = async (req, res) => {
+    try {
+        const { id,queryId} = req.params;
+        const { answerText } = req.body;
+        const alumni = await Alumni.findById(id);
+        if (!alumni) {
+            return res.status(404).json({ message: "Alumni not found." });
+        }
+        const query = await Queries.findById(queryId);
+        if (!query) {
+            return res.status(404).json({ message: "Query not found." });
+        }
+        const newAnswer = new Answers({
+            queryId : queryId,
+            alumniId : id,
+            answerText : answerText,
+          });
+          const savedAnswer = await newAnswer.save();
+          const answerId = savedAnswer._id 
+        query.answers.push(answerId);
+        await query.save(); 
+        alumni.answers.push(answerId);
+          await alumni.save();
+        res.status(201).json(savedAnswer);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+      }
+  };

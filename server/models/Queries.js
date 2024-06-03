@@ -3,7 +3,10 @@ import mongoose from "mongoose";
 const QuerySchema = new mongoose.Schema({
     companyId: String,
     studentId: String,
-    queryText: String,
+    queryText: {
+       type : String,
+        required : true
+    },
     answers: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Answers',
