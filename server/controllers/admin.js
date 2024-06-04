@@ -236,3 +236,21 @@ export const removeQueries = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 };
+
+export const getAllQueries = async (req, res) => {
+    try {
+        const queries = await Queries.find();
+        res.status(200).json(queries);
+    } catch (err) {
+        res.status(404).json({ message: err.message });
+    }
+};
+
+export const getAllAnswers = async (req, res) => {
+    try {
+        const answers = await Answers.find();
+        res.status(200).json(answers);
+    } catch (err) {
+        res.status(404).json({ message: err.message });
+    }
+};

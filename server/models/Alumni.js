@@ -32,7 +32,7 @@ const AlumniSchema = new mongoose.Schema({
     location: String,
     occupation: String,
     passoutYear: {
-        type: Number, // Change to Number as per your requirements
+        type: Number, 
         required: true,
     },
     answers: [{

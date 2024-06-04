@@ -3,6 +3,8 @@ import jwt from "jsonwebtoken";
 import Alumni from "../models/Alumni.js";
 import Student from "../models/Student.js";
 import Admin from "../models/Admin.js";
+
+//Working fine
 /* REGISTER ALUMNI */
 export const registerAlumni = async (req, res) => {
   try {
@@ -13,13 +15,13 @@ export const registerAlumni = async (req, res) => {
       password,
       companyName,
       picturePath,
+      location,
       occupation,
       passoutYear,
     } = req.body;
 
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);
-console.log(passwordHash)
     const newAlumni = new Alumni({
       firstName,
       lastName,
@@ -27,14 +29,16 @@ console.log(passwordHash)
       password: passwordHash,
       companyName,
       picturePath,
+      location,
       occupation,
       passoutYear,
     });
-    const savedAlumni = await newAlumni.save().status(201).json(savedAlumni);
+    const savedAlumni = await newAlumni.save();res.status(201).json(savedAlumni);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
+//Working fine
 /* REGISTER STUDENT*/
 export const registerStudent = async (req, res) => {
   try {
@@ -54,7 +58,7 @@ export const registerStudent = async (req, res) => {
       lastName,
       email,
       password: passwordHash2,
-      picturePath,
+     // picturePath,
       location,
       passoutYear,
       
@@ -67,7 +71,7 @@ export const registerStudent = async (req, res) => {
 };
 
 /* LOGGING IN */
-
+//Working fine
 /*ADMIN LOGIN */
 export const loginAdmin = async (req, res) => {
   try {
@@ -75,7 +79,7 @@ export const loginAdmin = async (req, res) => {
     const admin = await Admin.findOne({ email: email });
     if (!admin) return res.status(400).json({ msg: "Admin does not exist. " });
        console.log(admin.password)
-   // const isMatch3 = await  bcrypt.compare(password,admin.password);
+
     if (!password===admin.password) return res.status(400).json({ msg: "Invalid credentials. " });
   
 
@@ -86,6 +90,7 @@ export const loginAdmin = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+//Working fine
 export const loginAlumni = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -102,6 +107,7 @@ export const loginAlumni = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+//Working fine
 export const loginStudent = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -112,7 +118,6 @@ export const loginStudent = async (req, res) => {
     if (!isMatch2) return res.status(400).json({ msg: "Invalid credentials. " });
 
     const token2 = jwt.sign({ id: student._id }, process.env.JWT_SECRET);
-    // res.json({verifyToken: token2 })
     delete student.password;
     res.status(200).json({ token2, student });
   } catch (err) {

@@ -14,7 +14,7 @@ export const getAlumni = async (req, res) => {
         res.status(404).json({ message: err.message });
     }
 };
-//
+//Working fine
 export const getCompany = async (req, res) => {
     try {
         const { id,companyId } = req.params;
@@ -38,17 +38,18 @@ export const getAlumniAnswers = async (req, res) => {
         res.status(404).json({ message: err.message });
     }
 };
-
+//Working fine
 /* UPDATE */
 export const removeAlumni = async (req, res) => {
     try {
-        const alumni = await Alumni.findById(req.params.id);
+        const { id } = req.params;
+        const alumni = await Alumni.findById(id);
         if (!alumni) {
             return res.status(404).json({ message: "Alumni not found." });
         }
         
         // Remove student
-        await Alumni.deleteOne({ _id: req.params.id });
+        await Alumni.deleteOne({ _id: id });
         return res.status(200).json({ message: "Alumni removed successfully." });
     } catch (err) {
         res.status(500).json({ message: err.message });
