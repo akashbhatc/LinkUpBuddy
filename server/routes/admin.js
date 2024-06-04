@@ -43,7 +43,7 @@ router.get("/:id/student/:studId/queries",getStudentQueries);
 router.get("/:id/alumni/:alumId/answers", getAlumniAnswers);
 
 /* UPDATE */
-router.post("/:id/addCompany", addCompany);
+router.post("/addCompany", addCompany);
 // Remove a student
 router.delete("/:id/student/:studId/remove", removeStudent);
 
